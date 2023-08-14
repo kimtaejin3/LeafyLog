@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import Wrapper from "@/components/Wrapper";
 import styled from "styled-components";
 import logo from "../assets/LeafyLogTwo.png";
+import profile from "../assets/profile.png";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { BsTools } from "react-icons/bs";
@@ -16,8 +17,9 @@ const inter = Inter({ subsets: ["latin"] });
 const Components = styled.div`
   background-color: var(--bgColor);
   color: var(--textColor-white);
-  padding: 0 20px;
+  padding: 0 20px 60px;
   min-height: 100vh;
+  position: relative;
 `;
 
 const Header = styled.header`
@@ -50,7 +52,7 @@ const Grass = styled.div<IData>`
   cursor: pointer;
   background-color: ${(props) =>
     parseInt(props.depth) === 0
-      ? "white"
+      ? "#ebedf0"
       : parseInt(props.depth) <= 10
       ? "#B9FFC8"
       : parseInt(props.depth) <= 30
@@ -79,6 +81,11 @@ const DateArrow = styled.button`
   color: var(--textColor-white);
   cursor: pointer;
   font-size: 20px;
+
+  &:hover {
+    border-radius: 50%;
+    background-color: gray;
+  }
 `;
 
 const TopSection = styled.div``;
@@ -103,14 +110,14 @@ const Mheader = styled.div`
 
 const Mcount = styled.div`
   background-color: #262626;
-  padding: 18px;
+  padding: 15px;
   border-radius: 0 0 10px 10px;
   border-top: 4px solid #a67efa;
 `;
 
 const Mtime = styled.div`
   background-color: #262626;
-  padding: 18px;
+  padding: 15px;
   border-radius: 0 0 10px 10px;
   border-top: 4px solid #aceb44;
 `;
@@ -134,7 +141,7 @@ const Btn = styled.button`
   padding: 13px 0;
   border-radius: 10px;
   font-size: 15px;
-  font-weight: bold;
+  font-weight: 900;
 `;
 
 const Bsection = styled.div`
@@ -145,6 +152,110 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+`;
+
+const SubContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
+const GoalModal = styled.div`
+  position: absolute;
+  background-color: #262626;
+  height: 500px;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+
+  padding: 23px 20px;
+  border-radius: 20px;
+`;
+
+const TodoModal = styled.div`
+  position: absolute;
+  background-color: #262626;
+  height: 750px;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  border-radius: 20px;
+  padding: 23px 20px;
+`;
+
+const ModalTop = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+`;
+
+const ModalToggle = styled.button`
+  border: none;
+  background-color: inherit;
+  color: var(--textColor-white);
+  font-size: 18px;
+  cursor: pointer;
+`;
+
+const Select = styled.select`
+  padding: 12px;
+  background-color: #484848;
+  border: none;
+  width: 100%;
+  border-radius: 10px;
+  color: white;
+  font-size: 14px;
+`;
+
+const Option = styled.option``;
+
+const ModalSection = styled.div`
+  margin-top: 20px;
+`;
+
+const SectionTitle = styled.span`
+  margin-bottom: 20px;
+  display: inline-block;
+`;
+
+const ModalTextarea = styled.textarea`
+  width: 100%;
+  background-color: #484848;
+  border: none;
+  resize: none;
+  border-radius: 10px;
+  height: 220px;
+  color: white;
+  padding: 20px;
+  margin-bottom: 20px;
+`;
+
+const TextInput = styled.input`
+  display: block;
+  width: 100%;
+  background-color: #484848;
+  border: none;
+  border-radius: 10px;
+  padding: 13px 3px;
+  color: white;
+`;
+
+const DateField = styled.div`
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+`;
+
+const DateInput = styled.input`
+  background-color: #484848;
+  border: none;
+  color: white;
+  padding: 10px;
+  flex-grow: 1;
+  border-radius: 10px;
 `;
 
 interface IData {
@@ -181,6 +292,9 @@ export default function Home() {
 
   //목표
   const [goal, setGoal] = useState(goalItem);
+
+  const [showTodoModal, setShowTodoModal] = useState(false);
+  const [showGoalModal, setShowGoalModal] = useState(false);
 
   const arrowPrevClick = () => {
     setMon((m) => m - 1);
@@ -221,9 +335,29 @@ export default function Home() {
     <>
       <Wrapper>
         <Components>
+          {(showGoalModal || showTodoModal) && (
+            <div
+              style={{
+                backgroundColor: "black",
+                opacity: 0.8,
+                width: "100%",
+                height: "100%",
+                position: "absolute",
+                left: 0,
+              }}
+            ></div>
+          )}
           <Header>
             <Link href="/">
               <img width="80" src={logo.src} alt="" />
+            </Link>
+            <Link href="/profile">
+              <img
+                style={{ borderRadius: "50%" }}
+                width="30"
+                src={profile.src}
+                alt=""
+              />
             </Link>
           </Header>
 
@@ -272,7 +406,11 @@ export default function Home() {
               })}
             </div>
 
-            <Btn style={{ backgroundColor: "#ACEB44" }}>
+            {/* 오늘이 아닌 경우는 할 일 추가 disable */}
+            <Btn
+              onClick={() => setShowTodoModal((c) => !c)}
+              style={{ backgroundColor: "#ACEB44" }}
+            >
               오늘 할 일 추가하기
             </Btn>
           </MiddleSection>
@@ -289,18 +427,102 @@ export default function Home() {
                   <Stodo>
                     <Container>
                       <StodoTitle>{v.title}</StodoTitle>
-                      <div>
-                        <span>{v.spentTime}시간</span>
-                        <span>{v.progress}%</span>
-                      </div>
+                      <SubContainer>
+                        <span
+                          style={{
+                            fontSize: "16px",
+                            fontWeight: "bold",
+                            color: "#ACEB44",
+                          }}
+                        >
+                          {v.spentTime}시간
+                        </span>
+                        <span
+                          style={{
+                            fontSize: "20px",
+                            fontWeight: "bold",
+                            color: "#A67EFA",
+                          }}
+                        >
+                          {v.progress}%
+                        </span>
+                      </SubContainer>
                     </Container>
                   </Stodo>
                 );
               })}
             </div>
 
-            <Btn style={{ backgroundColor: "#A67EFA" }}>목표 추가하기</Btn>
+            <Btn
+              onClick={() => {
+                setShowGoalModal((c) => !c);
+              }}
+              style={{ backgroundColor: "#A67EFA" }}
+            >
+              목표 추가하기
+            </Btn>
           </Bsection>
+          {showGoalModal && (
+            <GoalModal>
+              <ModalTop>
+                <h3>목표 추가하기</h3>
+                <ModalToggle onClick={() => setShowGoalModal((c) => !c)}>
+                  X
+                </ModalToggle>
+              </ModalTop>
+              <form>
+                <ModalSection>
+                  <SectionTitle>제목</SectionTitle>
+                  <TextInput type="text" />
+                </ModalSection>
+                <ModalSection>
+                  <SectionTitle>기간</SectionTitle>
+                  <DateField>
+                    <DateInput type="date" />
+                    <span>~</span>
+                    <DateInput type="date" />
+                  </DateField>
+                </ModalSection>
+                <Btn style={{ backgroundColor: "#ACEB44" }}>추가하기</Btn>
+              </form>
+            </GoalModal>
+          )}
+          {showTodoModal && (
+            <TodoModal>
+              <ModalTop>
+                <h3>오늘 할 일 추가하기</h3>
+                <ModalToggle onClick={() => setShowTodoModal((c) => !c)}>
+                  X
+                </ModalToggle>
+              </ModalTop>
+              <form>
+                <Select>
+                  <Option>목표를 선택해주세요</Option>
+                  <Option>목표1</Option>
+                  <Option>목표2</Option>
+                </Select>
+                <ModalSection>
+                  <SectionTitle>작업시간</SectionTitle>
+                  <Select>
+                    <Option>작업시간</Option>
+                    <Option>30분</Option>
+                    <Option>1시간</Option>
+                    <Option>1시간 30분</Option>
+                    <Option>2시간</Option>
+                    <Option>3시간</Option>
+                    <Option>4시간</Option>
+                  </Select>
+                </ModalSection>
+                <ModalSection>
+                  <SectionTitle>작업내용</SectionTitle>
+                  <div>
+                    <ModalTextarea></ModalTextarea>
+                  </div>
+                </ModalSection>
+                <Btn style={{ backgroundColor: "#ACEB44" }}>추가하기</Btn>
+              </form>
+            </TodoModal>
+          )}
         </Components>
       </Wrapper>
     </>
