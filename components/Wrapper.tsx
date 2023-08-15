@@ -1,15 +1,18 @@
-import { ReactNode } from "react";
 import styled from "styled-components";
 
-const Container = styled.div`
-  max-width: 420px;
-  margin: 0 auto;
-`;
+type Props = {
+  children: React.ReactNode;
+};
 
-interface WrapperProps {
-  children: ReactNode;
-}
-
-export default function Wrapper({ children }: WrapperProps) {
+export default function Wrapper({ children }: Props) {
   return <Container>{children}</Container>;
 }
+
+const Container = styled.div`
+  max-width: 400px;
+  padding: 0 20px;
+  background-color: var(--bgColor);
+  color: var(--textColor-white);
+  margin: 0 auto;
+  min-height: 100vh;
+`;
