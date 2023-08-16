@@ -11,21 +11,21 @@ type Props = {
 
 export default function GrassField({ style }: Props) {
   // 만약 유저관리를 한다면 가입한 년도 1월 1일로.
-  let first_day_of_2023 = dayjs("2023-01-15");
+  let first_day_of_2023 = dayjs("2023-05-15");
   let now = dayjs();
   console.log(now.diff(first_day_of_2023, "day"));
   const [days, setDays] = useState(
-    new Array(now.diff(first_day_of_2023, "day")).fill(0)
+    new Array(now.diff(first_day_of_2023, "day") + 1).fill(0)
   );
 
   return (
     <Container style={style}>
       <GrassContainer>
         <Ul>
-          {days.map((v) => {
+          {days.map((v, i) => {
             return (
               <Li>
-                <Grass depth={10} />
+                <Grass day={i} depth={0} />
               </Li>
             );
           })}
@@ -42,7 +42,7 @@ const Container = styled.div`
 `;
 
 const GrassContainer = styled.div`
-  height: 124px;
+  height: 110px;
   overflow-y: scroll;
 
   &::-webkit-scrollbar {
