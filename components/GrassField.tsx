@@ -11,42 +11,26 @@ type Props = {
 
 export default function GrassField({ style }: Props) {
   // 만약 유저관리를 한다면 가입한 년도 1월 1일로.
-  let first_day_of_2023 = dayjs("2023-01-01");
+  let first_day_of_2023 = dayjs("2023-01-15");
   let now = dayjs();
-
+  console.log(now.diff(first_day_of_2023, "day"));
   const [days, setDays] = useState(
     new Array(now.diff(first_day_of_2023, "day")).fill(0)
   );
 
-  //useEffect로 토요일 지나면 한 줄만큼 shift되게 하기
-  const [shift, setShift] = useState(-220);
-
-  console.log(shift);
-  const leftShiftHandler = () => {
-    if (shift >= 90) return;
-    setShift((c) => c + 30);
-  };
-
-  const rightShiftHandler = () => {
-    if (shift <= -215) return;
-    setShift((c) => c - 30);
-  };
-
   return (
     <Container style={style}>
-      <div style={{ cursor: "pointer" }}>
-        <AiOutlineLeft onClick={leftShiftHandler} />
-      </div>
-      <div style={{ flexGrow: "1", overflowX: "hidden" }}>
-        <GrassContainer shift={shift}>
+      <GrassContainer>
+        <Ul>
           {days.map((v) => {
-            return <Grass depth={10} />;
+            return (
+              <Li>
+                <Grass depth={10} />
+              </Li>
+            );
           })}
-        </GrassContainer>
-      </div>
-      <div style={{ cursor: "pointer" }}>
-        <AiOutlineRight onClick={rightShiftHandler} />
-      </div>
+        </Ul>
+      </GrassContainer>
     </Container>
   );
 }
@@ -55,16 +39,29 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
-  margin: 0 -15px;
 `;
 
-const GrassContainer = styled.div<{ shift: number }>`
+const GrassContainer = styled.div`
+  height: 124px;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #eee;
+    border-radius: 15px;
+  }
+`;
+
+const Ul = styled.ul`
   display: flex;
-  flex-direction: column;
-  row-gap: 2px;
-  gap: 2px;
   flex-wrap: wrap;
-  margin-left: ${(props) => `${props.shift}px`};
-  height: 120px;
-  transition: all 0.1s;
+  row-gap: 4px;
+`;
+
+const Li = styled.li`
+  width: 5.5%;
+  padding: 0 2.8px;
 `;
