@@ -4,11 +4,12 @@ import styled from "styled-components";
 type Props = {
   iconColor: "green" | "purple";
   text: string;
+  style?: {};
 };
 
-export default function Title({ iconColor, text }: Props) {
+export default function Title({ style, iconColor, text }: Props) {
   return (
-    <Container>
+    <Container style={style}>
       <Icon iconColor={iconColor}>
         <BsTools />
       </Icon>

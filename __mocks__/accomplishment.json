@@ -1,0 +1,44 @@
+[
+  {
+    "year": 2023,
+    "mon": 8,
+    "date": 10,
+    "depth": 20
+  },
+  {
+    "year": 2023,
+    "mon": 8,
+    "date": 11,
+    "depth": 10
+  },
+  {
+    "year": 2023,
+    "mon": 8,
+    "date": 12,
+    "depth": 10
+  },
+  {
+    "year": 2023,
+    "mon": 8,
+    "date": 13,
+    "depth": 50
+  },
+  {
+    "year": 2023,
+    "mon": 8,
+    "date": 14,
+    "depth": 20
+  },
+  {
+    "year": 2023,
+    "mon": 8,
+    "date": 15,
+    "depth": 10
+  },
+  {
+    "year": 2023,
+    "mon": 8,
+    "date": 16,
+    "depth": 90
+  }
+]

@@ -5,17 +5,25 @@ import { AiOutlineLeft } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 
-type Props = {
-  style: {};
+type accListItem = {
+  year: number;
+  mon: number;
+  date: number;
+  depth: number;
 };
 
-export default function GrassField({ style }: Props) {
+type Props = {
+  accList: accListItem[];
+  style?: {};
+};
+
+export default function GrassField({ style, accList }: Props) {
   // 만약 유저관리를 한다면 가입한 년도 1월 1일로.
-  let first_day_of_2023 = dayjs("2023-05-15");
+  let start_day = dayjs("2023-05-15");
   let now = dayjs();
-  console.log(now.diff(first_day_of_2023, "day"));
+  console.log(now.diff(start_day, "day"));
   const [days, setDays] = useState(
-    new Array(now.diff(first_day_of_2023, "day") + 1).fill(0)
+    new Array(now.diff(start_day, "day") + 1).fill(0)
   );
 
   return (
@@ -23,9 +31,21 @@ export default function GrassField({ style }: Props) {
       <GrassContainer>
         <Ul>
           {days.map((v, i) => {
+            let depth = 0;
+            for (let j = 0; j < accList.length; j++) {
+              if (
+                accList[j].year === start_day.add(i, "day").year() &&
+                accList[j].mon === start_day.add(i, "day").month() + 1 &&
+                accList[j].date === start_day.add(i, "day").date()
+              ) {
+                depth = accList[j].depth;
+                console.log("yes");
+              }
+            }
+
             return (
-              <Li>
-                <Grass day={i} depth={0} />
+              <Li key={i}>
+                <Grass day={i} depth={depth} />
               </Li>
             );
           })}

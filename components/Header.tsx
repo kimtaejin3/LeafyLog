@@ -7,9 +7,9 @@ export default function Header() {
   return (
     <Container>
       <HeaderTitle>
-        <a href="/">
+        <Link href="/">
           <img src={logo.src} alt="logo" />
-        </a>
+        </Link>
       </HeaderTitle>
       <div>
         <Link href="/profile">

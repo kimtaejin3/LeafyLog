@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { yearState, monState, dayState } from "@/recoil/atom";
+import { styled } from "styled-components";
 
 type Props = {
   day: number;
@@ -38,7 +39,7 @@ export default function Grass({ day, depth }: Props) {
   };
 
   return (
-    <div
+    <Container
       onClick={handleGrassClick}
       style={{
         width: "15px",
@@ -47,6 +48,12 @@ export default function Grass({ day, depth }: Props) {
         backgroundColor: `${grass_color}`,
         cursor: "pointer",
       }}
-    ></div>
+    ></Container>
   );
 }
+
+const Container = styled.div`
+  &:hover {
+    box-shadow: inset 0 0 4px green;
+  }
+`;
