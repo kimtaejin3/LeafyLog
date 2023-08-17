@@ -11,4 +11,4 @@
 
 ## 디자인
 
-<img width="230" src="./screen/design.png"/>
+<img width="230" src="./screen/design2.png"/>
