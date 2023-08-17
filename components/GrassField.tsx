@@ -21,7 +21,6 @@ export default function GrassField({ style, accList }: Props) {
   // 만약 유저관리를 한다면 가입한 년도 1월 1일로.
   let start_day = dayjs("2023-05-15");
   let now = dayjs();
-  console.log(now.diff(start_day, "day"));
   const [days, setDays] = useState(
     new Array(now.diff(start_day, "day") + 1).fill(0)
   );

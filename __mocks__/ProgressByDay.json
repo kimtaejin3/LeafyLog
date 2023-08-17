@@ -1,0 +1,22 @@
+{
+  "count": 2,
+  "time": 2,
+  "works": [
+    {
+      "title": "코트트리에서 DP문제 2개 완료",
+      "time": 1,
+      "content": "https://codetree..."
+    },
+    {
+      "title": "코드잇에서 nextjs강의 챕터 1 완료",
+      "time": 1,
+      "content": "https://codeit..."
+    },
+    {
+      "title": "포트폴리오 네비게이션바 제작 완료",
+      "time": 1,
+      "content": "https://github"
+    }
+  ],
+  "explanation": "8월 17일의 진척도 데이터 입니다."
+}

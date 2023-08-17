@@ -9,7 +9,7 @@ type Props = {
 export default function ProgressItem({ style, title, content }: Props) {
   return (
     <Container style={style}>
-      <div>{title}</div>
+      <p>{title}</p>
       <div>{content}</div>
     </Container>
   );
