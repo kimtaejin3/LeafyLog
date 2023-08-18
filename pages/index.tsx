@@ -1,15 +1,19 @@
+// REVIEW: import 구문이 많아지면 순서를 정리하는게 좋습니다.
+// 이런 식으로 ESLint에서 자동으로 정리하는 기능도 제공해서 공유 드립니다! https://dev.to/otamnitram/sorting-your-imports-correctly-in-react-213m
+import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+
+import { yearState, monState, dayState } from "@/recoil/atom";
 import Btn from "@/components/Btn";
 import GrassField from "@/components/GrassField";
 import Title from "@/components/Title";
-import { useRecoilValue } from "recoil";
-import { yearState, monState, dayState } from "@/recoil/atom";
 import GoalItem from "@/components/GoalItem";
 import Label from "@/components/Label";
 import ProgressItem from "@/components/ProgressItem";
-import { useEffect, useState } from "react";
+
 import accList from "@/__mocks__/accomplishment.json";
-import progressByDayData from "@/__mocks__/ProgressByDay.json";
 import goalList from "@/__mocks__/goalList.json";
+import progressByDayData from "@/__mocks__/ProgressByDay.json";
 
 export default function Home() {
   const year = useRecoilValue(yearState);
