@@ -53,6 +53,7 @@ export default function Home() {
       {progressByday.works.map((v) => {
         return (
           <ProgressItem
+            key={v.time} // REVIEW: 순회하는 배열 타입의 경우 item 요소에 key를 붙여주어야 합니다.
             style={{ marginTop: "13px" }}
             title={v.title}
             content={v.content}
@@ -78,6 +79,7 @@ export default function Home() {
       {goals.map((v) => {
         return (
           <GoalItem
+            key={v.id} // REVIEW: 순회하는 배열 타입의 경우 item 요소에 key를 붙여주어야 합니다.
             style={{ marginTop: "10px" }}
             text={v.title}
             spentTime={v.spentTime}
