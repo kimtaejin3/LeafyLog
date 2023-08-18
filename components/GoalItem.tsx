@@ -1,10 +1,11 @@
+import { CSSProperties } from "react";
 import styled from "styled-components";
 
 type Props = {
   text: string;
   spentTime: number;
   progress: number;
-  style?: {};
+  style?: CSSProperties; // REVIEW: style 타입을 이렇게 명시해주면 실제 사용하는 곳에서도 type alias가 되어서 스타일링이 더 편해집니다! style이 아닌 다른 값이 들어오는 것을 막을 수도 있고요.
 };
 
 export default function GoalItem({ style, text, spentTime, progress }: Props) {
