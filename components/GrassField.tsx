@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import Grass from "./Grass";
 import { AiOutlineRight } from "react-icons/ai";
 import { AiOutlineLeft } from "react-icons/ai";
-import { useEffect, useState } from "react";
+import { CSSProperties, useEffect, useState } from "react";
 import dayjs from "dayjs";
 
 type accListItem = {
@@ -14,7 +14,7 @@ type accListItem = {
 
 type Props = {
   accList: accListItem[];
-  style?: {};
+  style?: CSSProperties;
 };
 
 export default function GrassField({ style, accList }: Props) {
@@ -83,4 +83,8 @@ const Ul = styled.ul`
 const Li = styled.li`
   width: 5.5%;
   padding: 0 2.8px;
+
+  @media (max-width: 340px) {
+    width: 7.5%;
+  }
 `;

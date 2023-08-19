@@ -1,17 +1,18 @@
-import { BsTools } from "react-icons/bs";
 import styled from "styled-components";
+import { FaTools } from "react-icons/fa";
+import { CSSProperties } from "react";
 
 type Props = {
   iconColor: "green" | "purple";
   text: string;
-  style?: {};
+  style?: CSSProperties;
 };
 
 export default function Title({ style, iconColor, text }: Props) {
   return (
     <Container style={style}>
       <Icon iconColor={iconColor}>
-        <BsTools />
+        <FaTools />
       </Icon>
       <TitleText>{text}</TitleText>
     </Container>

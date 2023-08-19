@@ -10,9 +10,9 @@ export default function Wrapper({ children }: Props) {
 
 const Container = styled.div`
   max-width: 400px;
-  padding: 0 20px;
   background-color: var(--bgColor);
   color: var(--textColor-white);
   margin: 0 auto;
   min-height: 100vh;
+  position: relative;
 `;

@@ -10,6 +10,8 @@ import { useEffect, useState } from "react";
 import accList from "@/__mocks__/accomplishment.json";
 import progressByDayData from "@/__mocks__/ProgressByDay.json";
 import goalList from "@/__mocks__/goalList.json";
+import ToDoModal from "@/components/ToDoModal";
+import GoalModal from "@/components/GoalModal";
 
 export default function Home() {
   const year = useRecoilValue(yearState);
@@ -18,6 +20,9 @@ export default function Home() {
 
   const [progressByday, setProgressByDay] = useState(progressByDayData);
   const [goals, setGoals] = useState(goalList);
+
+  const [showTodoModal, setShowTodoModal] = useState(false);
+  const [showGoalModal, setShowGoalModal] = useState(false);
 
   useEffect(() => {
     //서버에 요청 (year, mon, day로)
@@ -31,63 +36,95 @@ export default function Home() {
   }, []);
 
   return (
-    <>
-      <GrassField
-        accList={accList}
-        style={{ marginTop: "20px", marginBottom: "40px" }}
-      />
-      <Title
-        style={{ marginBottom: "20px" }}
-        iconColor="green"
-        text={`${year}년 ${mon}월 ${day}일 달성현황`}
-      />
+    <div style={{ padding: "0 20px" }}>
+      {showTodoModal && (
+        <ToDoModal
+          onClick={setShowTodoModal}
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            bottom: 0,
+            height: "400px",
+          }}
+        />
+      )}
+      {showGoalModal && (
+        <GoalModal
+          onClick={setShowGoalModal}
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            bottom: 0,
+            height: "400px",
+          }}
+        />
+      )}
+      <div>
+        <GrassField
+          accList={accList}
+          style={{ marginTop: "20px", marginBottom: "40px" }}
+        />
+        <Title
+          style={{ marginBottom: "20px" }}
+          iconColor="green"
+          text={`${year}년 ${mon}월 ${day}일 달성현황`}
+        />
 
-      {/* progressByday 시작 */}
-      <Label
-        style={{ marginRight: "10px" }}
-        color="purple"
-        text={`${progressByday.count}개`}
-      />
-      <Label color="green" text={`${progressByday.time}시간`} />
+        {/* progressByday 시작 */}
+        <Label
+          style={{ marginRight: "10px" }}
+          color="purple"
+          text={`${progressByday.count}개`}
+        />
+        <Label color="green" text={`${progressByday.time}시간`} />
 
-      {progressByday.works.map((v) => {
-        return (
-          <ProgressItem
-            style={{ marginTop: "13px" }}
-            title={v.title}
-            content={v.content}
-          />
-        );
-      })}
-      {/* progressByday 끝 */}
+        {progressByday.works.map((v) => {
+          return (
+            <ProgressItem
+              style={{ marginTop: "13px" }}
+              title={v.title}
+              content={v.content}
+            />
+          );
+        })}
+        {/* progressByday 끝 */}
 
-      <Btn
-        style={{ marginTop: "20px" }}
-        text="오늘 할 일 추가하기"
-        color="green"
-      />
+        <Btn
+          onClick={setShowTodoModal}
+          style={{ marginTop: "20px" }}
+          text="오늘 할 일 추가하기"
+          color="green"
+        />
 
-      <Title
-        style={{ marginTop: "40px", marginBottom: "20px" }}
-        iconColor="purple"
-        text="진행 중인 목표"
-      />
+        <Title
+          style={{ marginTop: "40px", marginBottom: "20px" }}
+          iconColor="purple"
+          text="진행 중인 목표"
+        />
 
-      {/* goalList 시작 */}
+        {/* goalList 시작 */}
 
-      {goals.map((v) => {
-        return (
-          <GoalItem
-            style={{ marginTop: "10px" }}
-            text={v.title}
-            spentTime={v.spentTime}
-            progress={v.progress}
-          />
-        );
-      })}
-      {/* goalList 끝 */}
+        {goals.map((v) => {
+          return (
+            <GoalItem
+              style={{ marginTop: "10px" }}
+              text={v.title}
+              spentTime={v.spentTime}
+              progress={v.progress}
+            />
+          );
+        })}
+        {/* goalList 끝 */}
 
-      <Btn style={{ marginTop: "20px" }} text="목표 추가하기" color="purple" />
-    </>
+        <Btn
+          onClick={setShowGoalModal}
+          style={{ marginTop: "20px" }}
+          text="목표 추가하기"
+          color="purple"
+        />
+      </div>
+    </div>
   );
 }

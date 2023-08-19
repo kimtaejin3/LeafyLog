@@ -1,14 +1,22 @@
+import { CSSProperties, Dispatch, SetStateAction } from "react";
 import { styled } from "styled-components";
 
 type Props = {
   color: "green" | "purple";
   text: string;
-  style?: {};
+  style?: CSSProperties;
+  onClick?: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function Btn({ style, color, text }: Props) {
+export default function Btn({ onClick, style, color, text }: Props) {
+  const handleBtnClick = () => {
+    if (onClick) {
+      onClick((c) => !c);
+    }
+  };
+
   return (
-    <Button style={style} color={color}>
+    <Button onClick={handleBtnClick} style={style} color={color}>
       {text}
     </Button>
   );

@@ -1,9 +1,10 @@
+import { CSSProperties } from "react";
 import { styled } from "styled-components";
 
 type Props = {
   text: string;
   color: "green" | "purple";
-  style?: {};
+  style?: CSSProperties;
 };
 
 export default function Label({ style, text, color }: Props) {
