@@ -1,10 +1,11 @@
+import { CSSProperties } from "react";
 import styled from "styled-components";
 
 type Props = {
   text: string;
   spentTime: number;
   progress: number;
-  style?: {};
+  style?: CSSProperties;
 };
 
 export default function GoalItem({ style, text, spentTime, progress }: Props) {
