@@ -1,16 +1,19 @@
+import { CSSProperties } from "react";
 import styled from "styled-components";
 
 type Props = {
   title: string;
   content: string;
-  style?: {};
+  style?: CSSProperties;
 };
 
 export default function ProgressItem({ style, title, content }: Props) {
   return (
     <Container style={style}>
       <p>{title}</p>
-      <div>{content}</div>
+      <div style={{ fontSize: "12px", marginTop: "10px", color: "#ddd" }}>
+        {content}
+      </div>
     </Container>
   );
 }

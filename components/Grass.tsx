@@ -13,13 +13,13 @@ export default function Grass({ day, depth }: Props) {
 
   if (depth === 0) {
     grass_color = "#DADADA";
-  } else if (depth <= 25) {
+  } else if (depth <= 30) {
     grass_color = "#B9FFC8";
-  } else if (depth <= 50) {
+  } else if (depth <= 60) {
     grass_color = "#6AC47D";
-  } else if (depth <= 75) {
+  } else if (depth <= 120) {
     grass_color = "#4ACC66";
-  } else if (depth <= 90) {
+  } else if (depth <= 180) {
     grass_color = "#369B4C";
   } else {
     grass_color = "#0A4918";
