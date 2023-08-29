@@ -18,9 +18,10 @@ export default function Home() {
   const mon = useRecoilValue(monState);
   const day = useRecoilValue(dayState);
 
+  // (질문) 이 부분을 any로 하지 않으면 관련된 부분에서 모두 warning이 생깁니다.
   const [progressByday, setProgressByDay] = useState<any[]>([]);
 
-  //이 any 고쳐야 됨. todomoal에서도 마찬가지
+  // (질문) 이 부분을 any로 하지 않으면 관련된 부분에서 모두 warning이 생깁니다.
   const [goals, setGoals] = useState<any[]>([]);
 
   const [showTodoModal, setShowTodoModal] = useState(false);
@@ -41,7 +42,7 @@ export default function Home() {
     setProgressByDay(filteredData);
 
     filteredData.map((v) => {
-      //여기서 나는 warning을 이해할 수가 없다..
+      //(질문) 여기서 나는 warning을 이해할 수가 없습니다.
       spentTimeAll += v.spentTime;
     });
 
