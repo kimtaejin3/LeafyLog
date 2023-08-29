@@ -47,7 +47,7 @@ export default function Home() {
 
     setTodosTime(
       `${Math.floor(spentTimeAll / 60)}시간 ${
-        spentTimeAll - Math.round(spentTimeAll / 60) * 60
+        spentTimeAll - Math.floor(spentTimeAll / 60) * 60
       }분`
     );
   };
