@@ -12,6 +12,7 @@ import ToDoModal from "@/components/ToDoModal";
 import GoalModal from "@/components/GoalModal";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/db/firebase";
+import { Goal, Progress } from "@/types";
 
 export default function Home() {
   const year = useRecoilValue(yearState);
@@ -19,10 +20,18 @@ export default function Home() {
   const day = useRecoilValue(dayState);
 
   // (질문) 이 부분을 any로 하지 않으면 관련된 부분에서 모두 warning이 생깁니다.
-  const [progressByday, setProgressByDay] = useState<any[]>([]);
+
+  // (REVIEW)
+  // 별도 type 선언 없이 default 값을 []로만 설정하게 되면 progressByDay의 type은 never[]가 됩니다.
+  // never[]는 빈 배열을 의미하는데, 빈 배열에는 어떤 값도 들어갈 수 없기 때문에 v.title 처럼 값을 가져오려고 하면 에러가 발생합니다.
+  // 따라서 progressByDay의 type을 명확히 해주어야 합니다.
+  // GrassField 컴포넌트에서 잘 해주셨는데 이 부분도 같은 방식으로 해주시면 됩니다.
+  const [progressByday, setProgressByDay] = useState<Progress[]>([]);
 
   // (질문) 이 부분을 any로 하지 않으면 관련된 부분에서 모두 warning이 생깁니다.
-  const [goals, setGoals] = useState<any[]>([]);
+  
+  // (REVIEW) 상동
+  const [goals, setGoals] = useState<Goal[]>([]);
 
   const [showTodoModal, setShowTodoModal] = useState(false);
   const [showGoalModal, setShowGoalModal] = useState(false);
@@ -34,8 +43,9 @@ export default function Home() {
 
   const getProgress = async () => {
     const data = await getDocs(progressByDayRef);
-    const filteredData = data.docs.map((doc) => ({
-      ...doc.data(),
+    // (REVIEW): progressByday의 type과 일치하도록 type casting을 해줬습니다.
+    const filteredData: Progress[] = data.docs.map((doc) => ({
+      ...(doc.data() as Omit<Progress, 'id'>),
       id: doc.id,
     }));
     let spentTimeAll = 0;
@@ -43,6 +53,11 @@ export default function Home() {
 
     filteredData.map((v) => {
       //(질문) 여기서 나는 warning을 이해할 수가 없습니다.
+
+      // (REVIEW)
+      // ERROR MESSAGE: Property 'spentTime' does not exist on type '{ id: string; }'
+      // 현재 v라고 작성된 filteredData item에는 id라는 property만 있다고 typescript는 인식하는데 spentTime이라는 property를 사용하려고 해서입니다.
+      // 따라서 warning을 해결하기 위해서는 filteredData의 item type을 명확히 해주어야 합니다.
       spentTimeAll += v.spentTime;
     });
 
@@ -63,8 +78,9 @@ export default function Home() {
   const getGoals = async () => {
     try {
       const data = await getDocs(goalsCollectionRef);
-      const filteredData = data.docs.map((doc) => ({
-        ...doc.data(),
+      // (REVIEW): goals의 type과 일치하도록 type casting을 해줬습니다.
+      const filteredData: Goal[] = data.docs.map((doc) => ({
+        ...(doc.data() as Omit<Goal, 'id'>),
         id: doc.id,
       }));
 
@@ -134,6 +150,10 @@ export default function Home() {
         {progressByday.map((v) => {
           return (
             <ProgressItem
+              // (REVIEW)
+              // ERROR MESSAGE: Missing "key" prop for element in iterator
+              // key prop이 없어서 발생하는 에러입니다. 순회하는 item에는 key prop이 필수입니다.
+              key={v.id}
               style={{ marginTop: "13px" }}
               title={v.title}
               content={v.content}
@@ -160,6 +180,8 @@ export default function Home() {
         {goals.map((v) => {
           return (
             <GoalItem
+              // (REVIEW): 상동
+              key={v.id}
               style={{ marginTop: "10px" }}
               text={v.title}
               spentTime={v.spentTime}
