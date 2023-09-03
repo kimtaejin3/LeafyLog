@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import Grass from "./Grass";
-import { CSSProperties, useEffect, useState } from "react";
+import { CSSProperties, useEffect, useRef, useState } from "react";
 import dayjs from "dayjs";
 import { collection, getDoc, getDocs } from "firebase/firestore";
 import { db } from "@/db/firebase";
@@ -33,6 +33,8 @@ export default function GrassField({ style, accList }: Props) {
     new Array(now.diff(start_day, "day") + 1).fill(0)
   );
   const [depthData, setDepthData] = useState<depthDataType[]>([]);
+
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const getDepth = async (date: string) => {
     const progressByDayRef = collection(db, date);
@@ -77,12 +79,12 @@ export default function GrassField({ style, accList }: Props) {
   }, []);
 
   useEffect(() => {
-    console.log("change: ", depthData);
-  }, [depthData]);
+    scrollRef.current?.scrollTo(0, scrollRef.current.scrollHeight);
+  }, []);
 
   return (
     <Container style={style}>
-      <GrassContainer>
+      <GrassContainer ref={scrollRef}>
         <Ul>
           {days.map((v, i) => {
             let depth = 0;
@@ -116,7 +118,7 @@ const Container = styled.div`
 
 const GrassContainer = styled.div`
   height: 110px;
-  overflow-y: scroll;
+  overflow-y: auto;
 
   &::-webkit-scrollbar {
     width: 5px;

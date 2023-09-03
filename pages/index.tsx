@@ -12,6 +12,7 @@ import ToDoModal from "@/components/ToDoModal";
 import GoalModal from "@/components/GoalModal";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/db/firebase";
+import { Goal, Progress } from "@/types";
 
 export default function Home() {
   const year = useRecoilValue(yearState);
@@ -19,10 +20,10 @@ export default function Home() {
   const day = useRecoilValue(dayState);
 
   // (질문) 이 부분을 any로 하지 않으면 관련된 부분에서 모두 warning이 생깁니다.
-  const [progressByday, setProgressByDay] = useState<any[]>([]);
+  const [progressByday, setProgressByDay] = useState<Progress[]>([]);
 
   // (질문) 이 부분을 any로 하지 않으면 관련된 부분에서 모두 warning이 생깁니다.
-  const [goals, setGoals] = useState<any[]>([]);
+  const [goals, setGoals] = useState<Goal[]>([]);
 
   const [showTodoModal, setShowTodoModal] = useState(false);
   const [showGoalModal, setShowGoalModal] = useState(false);
@@ -34,8 +35,8 @@ export default function Home() {
 
   const getProgress = async () => {
     const data = await getDocs(progressByDayRef);
-    const filteredData = data.docs.map((doc) => ({
-      ...doc.data(),
+    const filteredData: Progress[] = data.docs.map((doc) => ({
+      ...(doc.data() as Omit<Progress, "id">),
       id: doc.id,
     }));
     let spentTimeAll = 0;
@@ -63,8 +64,8 @@ export default function Home() {
   const getGoals = async () => {
     try {
       const data = await getDocs(goalsCollectionRef);
-      const filteredData = data.docs.map((doc) => ({
-        ...doc.data(),
+      const filteredData: Goal[] = data.docs.map((doc) => ({
+        ...(doc.data() as Omit<Goal, "id">),
         id: doc.id,
       }));
 
