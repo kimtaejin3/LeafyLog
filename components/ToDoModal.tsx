@@ -57,17 +57,7 @@ export default function ToDoModal({ onClick, style, goals }: Props) {
 
   return (
     <>
-      <div
-        style={{
-          position: "absolute",
-          left: 0,
-          right: 0,
-          top: 0,
-          opacity: 0.7,
-          height: "100%",
-          backgroundColor: "black",
-        }}
-      ></div>
+      <Shadowded />
       <Container style={style}>
         <Header>
           <p>오늘 할 일 추가하기</p>
@@ -170,4 +160,13 @@ const Textarea = styled.textarea`
   padding: 10px;
   height: 120px;
   resize: none;
+`;
+const Shadowded = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  opacity: 0.7;
+  height: 100%;
+  background-color: black;
 `;
