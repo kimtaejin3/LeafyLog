@@ -11,7 +11,7 @@ type Props = {
 
 export default function GoalItem({ style, text, spentTime, progress }: Props) {
   return (
-    <Link href="/detail">
+    <Link href={{ pathname: "/detail", query: { title: text } }}>
       <Container style={style}>
         <div>
           <p style={{ fontSize: "15px" }}>{text}</p>

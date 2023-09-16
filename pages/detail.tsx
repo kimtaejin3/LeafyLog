@@ -1,13 +1,22 @@
 import GoalBanner from "@/components/Banner";
 import ProgressItem from "@/components/ProgressItem";
 import Title from "@/components/Title";
+import { useRouter } from "next/router";
 
 export default function detail() {
+  const router = useRouter();
+  console.log(router.query);
+  let goalBannerTitle: string;
+  if (router.query.title === undefined) {
+    goalBannerTitle = "내용 없음";
+  } else {
+    goalBannerTitle = router.query.title;
+  }
   return (
     <div style={{ padding: "0 20px" }}>
       <GoalBanner
         style={{ marginTop: "20px" }}
-        text="Nextjs 코드잇 강의 듣기"
+        text={goalBannerTitle}
         sub_text="2023-08-20 ~ 2023-09-20"
       />
 
