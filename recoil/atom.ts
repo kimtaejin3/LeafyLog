@@ -1,3 +1,4 @@
+import { Goal } from "@/types";
 import dayjs from "dayjs";
 import { atom } from "recoil";
 
@@ -16,4 +17,9 @@ export const monState = atom({
 export const dayState = atom({
   key: "day",
   default: day.date(),
+});
+
+export const goalListState = atom<Goal[]>({
+  key: "goals",
+  default: [],
 });

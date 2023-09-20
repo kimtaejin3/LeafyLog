@@ -6,18 +6,11 @@ import dayjs from "dayjs";
 type Props = {
   text: string;
   spentTime: number;
-  progress: number;
   style?: CSSProperties;
   endedAt: string;
 };
 
-export default function GoalItem({
-  style,
-  text,
-  spentTime,
-  progress,
-  endedAt,
-}: Props) {
+export default function GoalItem({ style, text, spentTime, endedAt }: Props) {
   let end_day = dayjs(endedAt);
   let now = dayjs();
   const [d_day, setD_day] = useState<number>(end_day.diff(now, "day") + 1);

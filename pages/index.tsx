@@ -1,8 +1,8 @@
 import Btn from "@/components/Btn";
 import GrassField from "@/components/GrassField";
 import Title from "@/components/Title";
-import { useRecoilValue } from "recoil";
-import { yearState, monState, dayState } from "@/recoil/atom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { yearState, monState, dayState, goalListState } from "@/recoil/atom";
 import GoalItem from "@/components/GoalItem";
 import Label from "@/components/Label";
 import ProgressItem from "@/components/ProgressItem";
@@ -19,11 +19,13 @@ export default function Home() {
   const mon = useRecoilValue(monState);
   const day = useRecoilValue(dayState);
 
+  const [goals, setGoals] = useRecoilState(goalListState);
+
   // (질문) 이 부분을 any로 하지 않으면 관련된 부분에서 모두 warning이 생깁니다.
   const [progressByday, setProgressByDay] = useState<Progress[]>([]);
 
   // (질문) 이 부분을 any로 하지 않으면 관련된 부분에서 모두 warning이 생깁니다.
-  const [goals, setGoals] = useState<Goal[]>([]);
+  // const [goals, setGoals] = useState<Goal[]>([]);
 
   const [showTodoModal, setShowTodoModal] = useState(false);
   const [showGoalModal, setShowGoalModal] = useState(false);
@@ -164,7 +166,6 @@ export default function Home() {
               style={{ marginTop: "10px" }}
               text={v.title}
               spentTime={v.spentTime}
-              progress={v.progress}
               endedAt={v.endedAt}
             />
           );
