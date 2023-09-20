@@ -1,7 +1,11 @@
 import profileImg from "@/assets/profile.png";
 import GoalItem from "@/components/GoalItem";
+import { goalListState } from "@/recoil/atom";
+import { useRecoilValue } from "recoil";
 
 export default function profile() {
+  const goals = useRecoilValue(goalListState);
+
   return (
     <div style={{ padding: "0 20px" }}>
       <div style={{ textAlign: "center", marginTop: "20px" }}>
@@ -14,13 +18,17 @@ export default function profile() {
       </div>
       <div style={{ marginTop: "60px" }}>
         <p style={{ marginBottom: "20px" }}>내가 진행한 목표</p>
-        <GoalItem text="코드트리 문제풀기" spentTime={5} progress={40} />
-        <GoalItem
-          style={{ marginTop: "10px" }}
-          text="코드트리 문제풀기"
-          spentTime={5}
-          progress={40}
-        />
+
+        {goals.map((goal) => {
+          return (
+            <GoalItem
+              style={{ marginBottom: "10px" }}
+              text={goal.title}
+              spentTime={5}
+              endedAt={goal.endedAt}
+            />
+          );
+        })}
       </div>
     </div>
   );
