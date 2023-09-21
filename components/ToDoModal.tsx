@@ -2,7 +2,7 @@ import { CSSProperties, Dispatch, SetStateAction, useState } from "react";
 import styled from "styled-components";
 import { ImCross } from "react-icons/im";
 import Btn from "./Btn";
-import { dayState, monState, yearState } from "@/recoil/atom";
+import { dayState, goalListState, monState, yearState } from "@/recoil/atom";
 import { useRecoilValue } from "recoil";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/db/firebase";
@@ -11,15 +11,16 @@ type Props = {
   style?: CSSProperties;
   onClick: Dispatch<SetStateAction<boolean>>;
   //나중에 고칠예정
-  goals: any[];
 };
 
-export default function ToDoModal({ onClick, style, goals }: Props) {
+export default function ToDoModal({ onClick, style }: Props) {
   // goalId 필요. 추가할 때 데이터 넣어야 해서
   const [goalTitle, setGoalTitle] = useState("");
   const [spentTime, setSpentTime] = useState(0);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+
+  const goals = useRecoilValue(goalListState);
 
   const year = useRecoilValue(yearState);
   const mon = useRecoilValue(monState);
@@ -74,17 +75,7 @@ export default function ToDoModal({ onClick, style, goals }: Props) {
           </GoalSelect>
           <div style={{ marginTop: "20px" }}>
             <label htmlFor="spentTime">학습 시간</label>
-            <input
-              style={{
-                display: "block",
-                marginTop: "20px",
-                width: "100%",
-                padding: "12px",
-                borderRadius: "10px",
-                color: "white",
-                backgroundColor: "#484848",
-                border: "none",
-              }}
+            <Input
               type="number"
               id="spentTime"
               placeholder="분 단위로 입력해주세요."
@@ -94,17 +85,7 @@ export default function ToDoModal({ onClick, style, goals }: Props) {
           </div>
           <div style={{ marginTop: "20px" }}>
             <label htmlFor="title">제목</label>
-            <input
-              style={{
-                display: "block",
-                marginTop: "20px",
-                width: "100%",
-                padding: "12px",
-                borderRadius: "10px",
-                color: "white",
-                backgroundColor: "#484848",
-                border: "none",
-              }}
+            <Input
               type="text"
               id="title"
               value={title}
@@ -169,4 +150,15 @@ const Shadowded = styled.div`
   opacity: 0.7;
   height: 100%;
   background-color: black;
+`;
+
+const Input = styled.input`
+  display: block;
+  margin-top: 20px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  color: white;
+  background-color: #484848;
+  border: none;
 `;

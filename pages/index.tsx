@@ -100,7 +100,6 @@ export default function Home() {
             bottom: 0,
             height: "600px",
           }}
-          goals={goals}
         />
       )}
       {showGoalModal && (
