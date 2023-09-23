@@ -17,7 +17,7 @@ export default function profile() {
         />
       </div>
       <div style={{ marginTop: "60px" }}>
-        <p style={{ marginBottom: "20px" }}>내가 진행한 목표</p>
+        <p style={{ marginBottom: "20px" }}>진행중인 목표</p>
 
         {goals.map((goal) => {
           return (
@@ -26,6 +26,23 @@ export default function profile() {
               text={goal.title}
               spentTime={5}
               endedAt={goal.endedAt}
+              isProceed={true}
+            />
+          );
+        })}
+      </div>
+
+      <div style={{ marginTop: "60px" }}>
+        <p style={{ marginBottom: "20px" }}>기한이 끝난 목표</p>
+
+        {goals.map((goal) => {
+          return (
+            <GoalItem
+              style={{ marginBottom: "10px" }}
+              text={goal.title}
+              spentTime={5}
+              endedAt={goal.endedAt}
+              isProceed={false}
             />
           );
         })}

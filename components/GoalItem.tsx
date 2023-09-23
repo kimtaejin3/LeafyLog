@@ -8,14 +8,21 @@ type Props = {
   spentTime: number;
   style?: CSSProperties;
   endedAt: string;
+  isProceed?: boolean;
 };
 
-export default function GoalItem({ style, text, spentTime, endedAt }: Props) {
+export default function GoalItem({
+  style,
+  text,
+  spentTime,
+  endedAt,
+  isProceed = true,
+}: Props) {
   let end_day = dayjs(endedAt);
   let now = dayjs();
   const [d_day, setD_day] = useState<number>(end_day.diff(now, "day") + 1);
 
-  if (d_day > 0) {
+  if (isProceed ? d_day > 0 : d_day < 0) {
     return (
       <Link href={{ pathname: "/detail", query: { title: text } }}>
         <Container style={style}>
@@ -26,9 +33,11 @@ export default function GoalItem({ style, text, spentTime, endedAt }: Props) {
             <span style={{ color: "#ACEB44", fontWeight: "bold" }}>
               {spentTime}시간
             </span>
-            <span style={{ color: "#A67EFA", fontWeight: "bold" }}>
-              D-{d_day}
-            </span>
+            {isProceed && (
+              <span style={{ color: "#A67EFA", fontWeight: "bold" }}>
+                D-{d_day}
+              </span>
+            )}
           </div>
         </Container>
       </Link>

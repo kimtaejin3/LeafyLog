@@ -166,6 +166,7 @@ export default function Home() {
               text={v.title}
               spentTime={v.spentTime}
               endedAt={v.endedAt}
+              isProceed={true}
             />
           );
         })}
