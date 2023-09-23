@@ -6,6 +6,7 @@ import { dayState, goalListState, monState, yearState } from "@/recoil/atom";
 import { useRecoilValue } from "recoil";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/db/firebase";
+import dayjs from "dayjs";
 
 type Props = {
   style?: CSSProperties;
@@ -69,9 +70,15 @@ export default function ToDoModal({ onClick, style }: Props) {
         <form onSubmit={todoAdd}>
           <GoalSelect onChange={(e) => setGoalTitle(e.target.value)}>
             <option>목표를 선택해주세요</option>
-            {goals.map((v) => (
-              <option>{v.title}</option>
-            ))}
+            {goals.map((goal) => {
+              let end_day = dayjs(goal.endedAt);
+              let now = dayjs();
+              const d_day = end_day.diff(now, "day") + 1;
+
+              if (d_day > 0) {
+                return <option>{goal.title}</option>;
+              }
+            })}
           </GoalSelect>
           <div style={{ marginTop: "20px" }}>
             <label htmlFor="spentTime">학습 시간</label>
