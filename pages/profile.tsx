@@ -24,7 +24,6 @@ export default function profile() {
             <GoalItem
               style={{ marginBottom: "10px" }}
               text={goal.title}
-              spentTime={5}
               endedAt={goal.endedAt}
               isProceed={true}
             />
@@ -40,7 +39,6 @@ export default function profile() {
             <GoalItem
               style={{ marginBottom: "10px" }}
               text={goal.title}
-              spentTime={5}
               endedAt={goal.endedAt}
               isProceed={false}
             />

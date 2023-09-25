@@ -45,7 +45,6 @@ export default function Home() {
     setProgressByDay(filteredData);
 
     filteredData.map((v) => {
-      //(질문) 여기서 나는 warning을 이해할 수가 없습니다.
       spentTimeAll += v.spentTime;
     });
 
@@ -136,6 +135,7 @@ export default function Home() {
         {progressByday.map((v) => {
           return (
             <ProgressItem
+              key={v.id}
               style={{ marginTop: "13px" }}
               title={v.title}
               content={v.content}
@@ -162,9 +162,9 @@ export default function Home() {
         {goals.map((v) => {
           return (
             <GoalItem
+              key={v.id}
               style={{ marginTop: "10px" }}
               text={v.title}
-              spentTime={v.spentTime}
               endedAt={v.endedAt}
               isProceed={true}
             />
