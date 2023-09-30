@@ -4,6 +4,7 @@ import { ImCross } from "react-icons/im";
 import Btn from "./Btn";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/db/firebase";
+import { useRouter } from "next/router";
 
 type Props = {
   style?: CSSProperties;
@@ -16,6 +17,7 @@ export default function GoalModal({ onClick, style }: Props) {
   const [goalEnded, setGoalEnded] = useState("");
 
   const goalsCollectionRef = collection(db, "goals");
+  const router = useRouter();
 
   const addGoal = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -43,6 +45,8 @@ export default function GoalModal({ onClick, style }: Props) {
     setGoalTitle("");
     setGoalStarted("");
     setGoalEnded("");
+
+    router.reload();
   };
 
   return (

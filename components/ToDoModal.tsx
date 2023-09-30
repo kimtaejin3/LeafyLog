@@ -7,6 +7,7 @@ import { useRecoilValue } from "recoil";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/db/firebase";
 import dayjs from "dayjs";
+import { useRouter } from "next/router";
 
 type Props = {
   style?: CSSProperties;
@@ -26,6 +27,7 @@ export default function ToDoModal({ onClick, style }: Props) {
   const year = useRecoilValue(yearState);
   const mon = useRecoilValue(monState);
   const day = useRecoilValue(dayState);
+  const router = useRouter();
 
   const todoAdd = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -55,6 +57,8 @@ export default function ToDoModal({ onClick, style }: Props) {
     } catch (err) {
       console.error(err);
     }
+
+    router.reload();
   };
 
   return (
