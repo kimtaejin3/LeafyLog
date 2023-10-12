@@ -80,7 +80,7 @@ export default function ToDoModal({ onClick, style }: Props) {
               const d_day = end_day.diff(now, "day") + 1;
 
               if (d_day > 0) {
-                return <option>{goal.title}</option>;
+                return <option key={goal.id}>{goal.title}</option>;
               }
             })}
           </GoalSelect>

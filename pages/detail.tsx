@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 export default function detail() {
   const router = useRouter();
   console.log(router.query);
-  let goalBannerTitle: string;
+  let goalBannerTitle: string | string[];
   if (router.query.title === undefined) {
     goalBannerTitle = "내용 없음";
   } else {

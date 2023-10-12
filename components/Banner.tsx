@@ -2,7 +2,7 @@ import { CSSProperties } from "react";
 import { styled } from "styled-components";
 
 type Props = {
-  text: string;
+  text: string | string[];
   sub_text: string;
   style?: CSSProperties;
 };
